@@ -50,7 +50,7 @@ jobs:
     - name: Build and push
       working-directory: ./Dockerfile
       run: |
-        docker build -t langhae/m-dev:tomcat_v4 .
-        docker push langhae/m-dev:tomcat_v4
+        docker build -t langhae/m-dev:tomcat_v5 .
+        docker push langhae/m-dev:tomcat_v5
       
   
