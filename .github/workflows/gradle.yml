@@ -24,3 +24,14 @@ jobs:
           
       - name: check build
         run: ls ./build/libs
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: docker buold
+        run: |
+          cp ./build/libs/*.war ./Dockerfile
+          docker build -t langhae/m-dev:tomcat_v10
+          docker images
+      
+  
