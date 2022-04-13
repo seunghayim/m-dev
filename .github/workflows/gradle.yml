@@ -52,17 +52,18 @@ jobs:
       working-directory: ./Dockerfile
       run: |
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest
-        
-    - name: Get GKE Credentials
-      uses: google-github-actions/get-gke-credentials@v0.7.0
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest  
+     
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
       with:
-        cluster_name: langhae
-        location: us-central1-c
-        project_id: zinc-code-343008
-        credentials: ${{ secrets.GCP_TOKEN }}
-        
+        credentials_json: '${{ secrets.GCP_TOKEN }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'langhae'
+        location: 'us-central1-c'
     - name: Update Deployment image
       run: kubectl rollout restart deploy/was-deploy
-      
   
