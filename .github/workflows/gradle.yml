@@ -54,7 +54,7 @@ jobs:
         docker build -f Dockerfile \
         -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest \
         -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} . \
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev --all-tags
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev -a
      
     - name: 'auth'
       uses: 'google-github-actions/auth@v0'
