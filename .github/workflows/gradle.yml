@@ -32,9 +32,10 @@ jobs:
     - name: check docker ps
       run: docker ps
             
-    - name: copy *.war
+    - name: copy *.war file to Dockerfile
       run: |
         cp ./build/libs/*.war ./Dockerfile
+        
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
@@ -50,7 +51,7 @@ jobs:
     - name: Build and push
       working-directory: ./Dockerfile
       run: |
-        docker build -t langhae/m-dev:tomcat_v5 .
-        docker push langhae/m-dev:tomcat_v5
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest
       
   
