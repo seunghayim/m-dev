@@ -54,6 +54,9 @@ jobs:
     - name: Push new image
       run: |
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} --all-tags
+        
+    - name: re-name
+      run: mv ./build/libs/*.war ./build/libs/backup_`date +%Y%m%d`_${GITHUB_SHA::7}.war
      
     - name: 'auth'
       uses: 'google-github-actions/auth@v0'
