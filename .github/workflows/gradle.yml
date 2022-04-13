@@ -62,12 +62,6 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ secrets.GCP_TOKEN }}'
-
-    - name: 'get-credentials'
-      uses: 'google-github-actions/get-gke-credentials@v0'
-      with:
-        cluster_name: 'langhae'
-        location: 'us-central1-c'
         
     - name: Update Deployment image
       run: kubectl set image deployment/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/m-dev:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
