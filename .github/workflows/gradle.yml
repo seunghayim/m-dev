@@ -51,19 +51,22 @@ jobs:
     - name: Build and push
       working-directory: ./Dockerfile
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest  
+        docker build -f Dockerfile \
+        -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:latest \
+        -t ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev --all-tags
      
-    - id: 'auth'
+    - name: 'auth'
       uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ secrets.GCP_TOKEN }}'
 
-    - id: 'get-credentials'
+    - name: 'get-credentials'
       uses: 'google-github-actions/get-gke-credentials@v0'
       with:
         cluster_name: 'langhae'
         location: 'us-central1-c'
+        
     - name: Update Deployment image
-      run: kubectl rollout restart deploy/was-deploy
+      run: kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/m-dev:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
   
