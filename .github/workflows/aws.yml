@@ -57,15 +57,11 @@ jobs:
         aws-region: eu-west-2
         role-session-name: github-action	
         
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-    - name: Connect to EKS cluster 
-      run: aws eks --region eu-west-2 update-kubeconfig --name langhae
+    - name: Build and push CONTAINER_NAME
+      uses: ianbelcher/eks-kubectl-action@main
+      with:
+        cluster_name: langhae
+        args: set image deployment/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
         
-    - name: Update deployment image
-      run: |
-        kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
-    
 
 
