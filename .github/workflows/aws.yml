@@ -25,10 +25,6 @@ jobs:
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: build
-        
-    - name: copy *.war file to Dockerfile
-      run: |
-        cp ./build/libs/*.war ./Dockerfile
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -62,3 +58,6 @@ jobs:
     - name: Update deployment image
       run: |
         kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
+    
+
+
