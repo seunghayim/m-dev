@@ -57,7 +57,7 @@ jobs:
         aws-region: eu-west-2
         role-session-name: github_action
     - name: Provision cluster
-      uses: aws-actions/amazon-eks-fargate@v0.1
+      uses: aws-actions/amazon-eks-fargate@v0.1.1
         
     - name: Update deployment image
       run: |
