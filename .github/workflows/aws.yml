@@ -56,16 +56,14 @@ jobs:
         role-to-assume: arn:aws:iam::940168446867:role/github-action
         aws-region: eu-west-2
         role-session-name: github-action	
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-        
-        
-    - name: Build and push CONTAINER_NAME
-      uses: ianbelcher/eks-kubectl-action@master
+    - name: verify deployment
+      uses: kodermax/kubectl-aws-eks@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        cluster_name: langhae
         args: set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
+        
+        
    
         
 
