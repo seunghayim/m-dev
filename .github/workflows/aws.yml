@@ -53,10 +53,10 @@ jobs:
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::940168446867:role/github-action
+        role-to-assume: arn:aws:eks:eu-west-2:940168446867:cluster/langhae
         aws-region: eu-west-2
-        role-session-name: github-action	
-        web-identity-token-file: ${{ secrets.EKS_TOKEN_FILE }}
+        role-session-name: cluster/langhae	
+        role-external-id: sts.amazonaws.com
     - name: deploy 
       run: kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
         
