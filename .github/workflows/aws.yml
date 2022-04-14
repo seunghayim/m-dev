@@ -56,8 +56,7 @@ jobs:
         role-to-assume: arn:aws:iam::940168446867:role/github-action
         aws-region: eu-west-2
         role-session-name: github-action	
-        web-identity-token-file: ${{ secrets.KUBE_CONFIG_DATA }}
-        arg: set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
+        web-identity-token-file: ${{ secrets.EKS_TOKEN_FILE }}
       
         
         
