@@ -51,7 +51,7 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} --all-tags
 
     - name: Configure AWS credentials from Test account
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@main
       with:
         role-to-assume: arn:aws:iam::940168446867:role/github_action
         aws-region: eu-west-2
