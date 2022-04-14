@@ -53,9 +53,13 @@ jobs:
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::940168446867:role/github_action
+        role-to-assume: arn:aws:iam::940168446867:role/github-action
         aws-region: eu-west-2
-        role-session-name: github_action
+        role-session-name: github-action	
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
         
     - name: Update deployment image
       run: |
