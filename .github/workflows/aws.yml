@@ -59,10 +59,10 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
+        aws-region: ${{ secrets.EKS_REGION }}
         
     - name: Connect to EKS cluster 
-      run: aws eks --region eu-west-2 update-kubeconfig --name langhae
+      run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
       
     - name: deploy
       run: |
@@ -70,7 +70,7 @@ jobs:
         
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 mv ./build/libs/*.war s3://magiclanghae/backup_${GITHUB_SHA::7}_`date +%Y%m%d`/
+        aws s3 mv ./build/libs/*.war s3://${{ secrets.EKS_BUCKET_NAME }}/backup_${GITHUB_SHA::7}_`date +%Y%m%d`/
 
         
    
