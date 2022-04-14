@@ -50,18 +50,17 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} --all-tags
 
-    - name: Configure AWS credentials from Test account
+    - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::940168446867:role/github-action
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
-        role-session-name: github-action
-    - name: Update configfile
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        role-session-name: ${{ secrets.AWS_ROLE_SESSION_NAME }}
+    - name: deploy
       run: |
-        aws eks update-kubeconfig --region eu-west-2 --name langhae --role-arn arn:aws:iam::940168446867:role/eksctl-langhae-addon-iamserviceaccount-kube-Role1-1AT8QNH0W9ETN
-    - name: ku
-      run: kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
-        
+        kubectl set image deploy/was-deploy java={{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
 
         
    
