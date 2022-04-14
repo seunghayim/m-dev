@@ -58,7 +58,7 @@ jobs:
         role-session-name: github-action
     - name: Update configfile
       run: |
-        aws eks update-kubeconfig --region eu-west-2 --name langhae arn:aws:iam::940168446867:role/eksctl-langhae-cluster-ServiceRole-LZG4TKRR2FSC
+        aws eks update-kubeconfig --region eu-west-2 --name langhae --role-arn arn:aws:iam::940168446867:role/eksctl-langhae-addon-iamserviceaccount-kube-Role1-1AT8QNH0W9ETN
     - name: ku
       run: kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
         
