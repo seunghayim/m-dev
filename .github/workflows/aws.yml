@@ -25,6 +25,10 @@ jobs:
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: build
+        
+    - name: copy *.war file to Dockerfile
+      run: |
+        cp ./build/libs/*.war ./Dockerfile
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -34,9 +38,9 @@ jobs:
 
     - name: Login to DockerHub
       uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build dockerfile
       working-directory: ./Dockerfile
