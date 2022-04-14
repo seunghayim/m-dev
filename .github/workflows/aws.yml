@@ -70,7 +70,7 @@ jobs:
         
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 mv /build/libs/*.war s3://magiclanghae
+        aws s3 mv ./build/libs/*.war s3://magiclanghae
 
         
    
