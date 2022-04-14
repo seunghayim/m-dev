@@ -56,10 +56,13 @@ jobs:
         role-to-assume: arn:aws:iam::940168446867:role/github-action
         aws-region: eu-west-2
         role-session-name: github-action
-        role-external-id: sts.amazonaws.com
-    - name: deploy 
+    - name: Update configfile
+      run: |
+        aws eks update-kubeconfig --region eu-west-2 --name langhae
+    - name: ku
       run: kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
         
+
         
    
         
