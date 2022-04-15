@@ -80,8 +80,8 @@ jobs:
     - name: EKS cluster endpoint access control
       run: |
         aws eks update-cluster-config \
-        --region eu-west-2 \
-        --name langhae \
+        --region ${{ secrets.EKS_REGION }} \
+        --name ${{ secrets.EKS_CLUSTER_NAME }} \
         --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}/32",endpointPrivateAccess=true
       
     - name: deploy
