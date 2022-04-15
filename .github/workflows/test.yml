@@ -3,7 +3,9 @@ name: Deploy to aws eks
 on:
   push:
     branches: [main]
-
+    
+  workflow_dispatch:
+  
 jobs:
   docker_build_push:
     uses: seunghayim/m-dev/.github/workflows/docker.yml@main
