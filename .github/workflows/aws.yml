@@ -79,7 +79,10 @@ jobs:
         
     - name: EKS cluster endpoint access control
       run: |
-        eksctl utils set-public-access-cidrs --cluster=langhae ${{ steps.ip.outputs.ipv4 }}/32 --approve
+        aws eks update-cluster-config \
+        --region eu-west-2 \
+        --name langhae \
+        --resources-vpc-config publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}/32"
       
     - name: deploy
       run: |
