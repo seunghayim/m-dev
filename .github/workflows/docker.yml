@@ -2,9 +2,6 @@ name: Build Docker Container & Push to DO Registry
 
 on:
   workflow_call:
-    secrets:
-      envPAT:
-        required: true
   workflow_dispatch:
 
 jobs:
