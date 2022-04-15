@@ -5,11 +5,15 @@ on:
     branches: [main]
     
   workflow_call:
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
 
 jobs:
   docker_build_push:
     uses: seunghayim/m-dev/.github/workflows/docker.yml@main
     secrets:
-      envPAT: |
-       ${{ secrets.DOCKERHUB_USERNAME }}
-       ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
