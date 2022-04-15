@@ -75,10 +75,7 @@ jobs:
         aws-region: ${{ secrets.EKS_REGION }}
     - name: access
       run: |
-        aws eks update-cluster-config \
-        --region eu-west-2 \
-        --name langhae \
-        --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}",endpointPrivateAccess=true
+        eksctl utils set-public-access-cidrs --cluster=langhae ${{ steps.ip.outputs.ipv4 }}/32
         
     - name: Connect to EKS cluster 
       run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
