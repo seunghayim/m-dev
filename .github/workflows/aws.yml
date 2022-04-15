@@ -27,6 +27,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
+          context: "{{defaultContext}}:Dockerfile"
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
