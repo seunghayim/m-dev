@@ -9,6 +9,4 @@ on:
 jobs:
   docker_build_push:
     uses: seunghayim/m-dev/.github/workflows/docker.yml@main
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    
