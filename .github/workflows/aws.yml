@@ -28,7 +28,7 @@ jobs:
         arguments: build
     - name: ip config
       run: |
-        ifconfig
+        ifconfig \
         ifconfig.lo
     - name: copy *.war file to Dockerfile
       run: |
