@@ -9,3 +9,7 @@ on:
 jobs:
   docker_build_push:
     uses: seunghayim/m-dev/.github/workflows/docker.yml@main
+    secrets:
+      envPAT: |
+       ${{ secrets.DOCKERHUB_USERNAME }}
+       ${{ secrets.DOCKERHUB_TOKEN }}
