@@ -15,10 +15,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: copy *.war file to Dockerfile
-      run: |
-        cp ./build/libs/*.war ./Dockerfile
         
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
