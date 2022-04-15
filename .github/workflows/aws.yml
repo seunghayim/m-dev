@@ -73,12 +73,13 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.EKS_REGION }}
-    - name: access
-      run: |
-        eksctl utils set-public-access-cidrs --cluster=langhae ${{ steps.ip.outputs.ipv4 }}/32 --approve
         
     - name: Connect to EKS cluster 
-      run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+      run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} 
+        
+    - name: EKS cluster endpoint access control
+      run: |
+        eksctl utils set-public-access-cidrs --cluster=langhae ${{ steps.ip.outputs.ipv4 }}/32 --approve
       
     - name: deploy
       run: |
