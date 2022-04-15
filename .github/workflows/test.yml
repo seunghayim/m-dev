@@ -8,4 +8,4 @@ on:
 
 jobs:
   docker_build_push:
-    uses: seunghayim/m-dev/.github/workflows/docker.yaml@main
+    uses: seunghayim/m-dev/.github/workflows/docker.yml@main
