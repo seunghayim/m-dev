@@ -68,9 +68,7 @@ jobs:
       run: |
         kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
         
-    - name: Copy files to the test website with the AWS CLI
-      run: |
-        aws s3 mv ./build/libs/*.war s3://${{ secrets.EKS_BUCKET_NAME }}/backup_${GITHUB_SHA::7}_`date +%Y%m%d`/
+    
 
         
    
