@@ -82,7 +82,7 @@ jobs:
         aws eks update-cluster-config \
         --region eu-west-2 \
         --name langhae \
-        --resources-vpc-config publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}/32"
+        --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}/32",endpointPrivateAccess=true
       
     - name: deploy
       run: |
