@@ -43,4 +43,4 @@ jobs:
         push: true
         tags: |
          ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
-         ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{GITHUB_SHA::7}}-${{GITHUB_RUN_NUMBER}}
+         ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${github.sha::7}-${github.run_number}
