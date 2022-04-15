@@ -13,7 +13,7 @@ jobs:
     steps:       
       - name: Set the value
         run: |
-          echo "RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+          echo "GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
           echo "GITHUB_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
       -
         name: Set up QEMU
