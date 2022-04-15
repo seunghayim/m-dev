@@ -33,6 +33,17 @@ jobs:
       run: |
         cp ./build/libs/*.war ./Dockerfile
         
+        
+        
+    - name: Public IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+
+    - name: Print Public IP
+      run: |
+        echo ${{ steps.ip.outputs.ipv4 }}
+        echo ${{ steps.ip.outputs.ipv6 }}
+        
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     
