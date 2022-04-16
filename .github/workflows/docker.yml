@@ -1,4 +1,4 @@
-name: Build Docker Container & Push to DO Registry
+name: CI / CD
 
 on:
   push:
@@ -47,3 +47,34 @@ jobs:
         tags: |
          ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
          ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ env.GITHUB_SHA }}-${{github.run_number}}
+         
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.EKS_REGION }}
+
+    - name: Connect to EKS cluster 
+      run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+    - name: Get public IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+
+    - name: EKS cluster endpoint access control
+      run: |
+        aws eks update-cluster-config \
+        --region ${{ secrets.EKS_REGION }} \
+        --name ${{ secrets.EKS_CLUSTER_NAME }} \
+        --resources-vpc-config endpointPublicAccess=true,publicAccessCidrs="${{ steps.ip.outputs.ipv4 }}/32",endpointPrivateAccess=true
+
+    - name: deploy
+      run: |
+        kubectl set image deploy/was-deploy java=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}
+
+    - name: Copy files to the test website with the AWS CLI
+      run: |
+        aws s3 mv ./build/libs/*.war s3://${{ secrets.EKS_BUCKET_NAME }}/warfile_backup/`date +%Y%m%d`_${GITHUB_SHA::7}/
+
+
