@@ -59,10 +59,6 @@ jobs:
     - name: Connect to EKS cluster 
       run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
-    - name: Get public IP
-      id: ip
-      uses: haythem/public-ip@v1.2
-
     - name: EKS cluster endpoint access control
       run: |
         aws eks update-cluster-config \
